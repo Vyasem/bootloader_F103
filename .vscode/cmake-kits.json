@@ -1,0 +1,11 @@
+[
+	{
+		"name": "ARM",
+		"preferredGenerator":
+		{
+			"name" : "Ninja",
+			"generator" : "Ninja"
+		},
+		"toolchainFile": "${workspaceFolder}/prog/cmake/toolchain.cmake"
+	}
+]

@@ -1,0 +1,7 @@
+{
+	"cmake.buildTask": true,
+	"cortex-debug.variableUseNaturalFormat": true,
+	"conventionalCommits.scopes": [
+		"mcu"
+	]
+}
