@@ -1,0 +1,3 @@
+[submodule "bootloader/openblt"]
+	path = bootloader/openblt
+	url = git@git.ds.t-ener.com:libraries/openblt.git
