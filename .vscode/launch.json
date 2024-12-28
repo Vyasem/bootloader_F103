@@ -38,15 +38,17 @@
 			//"svdFile": "${workspaceFolder}/build/targets/stm32l431/cmsis-svd-src/stm32l4/STM32L4x1.svd",
 			"breakAfterReset": true,
 			//"serverArgs": ["-gui"],
-			//"preLaunchTask": "Build the active target",
+			"preLaunchTask": "Build the active target",
 			"liveWatch": {
 				"enabled": true,
 				"samplesPerSecond": 4
 			},
-			// "preLaunchCommands": [
-			// 	"enable breakpoint",
-			// 	"monitor reset"
-			// ]
+			"preLaunchCommands": [
+				"load ./../bootloader/bootloader.srec",
+				"load ./${command:cmake.getLaunchTargetFilename}_checksum.srec",
+				"enable breakpoint",
+				"monitor reset"
+			]
 		}
 	],
 	"version": "2.0.0"

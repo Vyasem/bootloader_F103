@@ -16,6 +16,7 @@ target_include_directories(${PROG_APP} PRIVATE
 )
 
 target_compile_definitions(${PROG_APP} PRIVATE
+	USER_VECT_TAB_ADDRESS
 	USE_FULL_LL_DRIVER
 	USE_HAL_DRIVER
 	STM32F103xB
@@ -25,9 +26,15 @@ target_link_options(${PROG_APP} PRIVATE
 	-T${CMAKE_CURRENT_SOURCE_DIR}/STM32F103C8Tx.ld
 )
 
+# Convert output to srec and make factory image
+get_target_property(bootloader_SOURCE_DIR bootloader SOURCE_DIR)
+set(OPENBLT_HOST_DIR ${bootloader_SOURCE_DIR}/openblt/Host)
 set(MCU_OUTPUT_FILENAME ${PROJECT_NAME}_${CMAKE_PROJECT_VERSION})
 add_custom_command(TARGET ${PROG_APP}
 	POST_BUILD
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-	COMMAND ${CMAKE_OBJCOPY} ARGS -O ihex -I elf32-littlearm ${PROG_APP} ${MCU_OUTPUT_FILENAME}.hex
+	COMMAND ${CMAKE_OBJCOPY} ARGS -O srec -I elf32-littlearm ${PROG_APP} ${MCU_OUTPUT_FILENAME}.srec
+	COMMAND ${OPENBLT_HOST_DIR}/CsAddTable -t -a80FFE00 ${MCU_OUTPUT_FILENAME}.srec ${PROG_APP}_checksum.srec
+	COMMAND ${OPENBLT_HOST_DIR}/CsAddTable -a80FFE00 ${MCU_OUTPUT_FILENAME}.srec ${MCU_OUTPUT_FILENAME}_boot.srec
+	COMMAND ${OPENBLT_HOST_DIR}/FwCombine $<TARGET_FILE_DIR:bootloader>/$<TARGET_FILE_NAME:bootloader>.srec ${MCU_OUTPUT_FILENAME}_boot.srec ${MCU_OUTPUT_FILENAME}_factory.srec
 )
