@@ -49,6 +49,29 @@
 				"enable breakpoint",
 				"monitor reset"
 			]
+		},
+		{
+			"name": "MCU JLink",
+			"type": "cortex-debug",
+			"request": "launch",
+			"cwd": "${command:cmake.launchTargetDirectory}",
+			"executable": "${command:cmake.launchTargetPath}",
+			"servertype": "jlink",
+			"device": "STM32F103C8",
+			"interface": "swd",
+			"showDevDebugOutput": "raw",
+			"serialNumber": "", //If you have more than one J-Link probe, add the serial number here.
+			"runToEntryPoint": "main",
+			//"svdFile": "${workspaceFolder}/targets/stm32f427zgt6/STM32F427.svd",
+			"breakAfterReset": true,
+			"serverArgs": ["-gui"],
+			"preLaunchTask": "Build the active target",
+			"preLaunchCommands": [
+				"load ./../bootloader/bootloader.srec",
+				"load ./${command:cmake.getLaunchTargetFilename}_checksum.srec",
+				"enable breakpoint",
+				"monitor reset"
+			]
 		}
 	],
 	"version": "2.0.0"
