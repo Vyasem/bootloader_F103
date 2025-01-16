@@ -20,9 +20,9 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 * PURPOSE. See the GNU General Public License for more details.
 *
-* You have received a copy of the GNU General Public License along with OpenBLT. It 
+* You have received a copy of the GNU General Public License along with OpenBLT. It
 * should be located in ".\Doc\license.html". If not, contact Feaser to obtain a copy.
-* 
+*
 * \endinternal
 ****************************************************************************************/
 
@@ -99,6 +99,27 @@ blt_bool CpuUserProgramStartHook(void)
 #endif /* BOOT_CPU_USER_PROGRAM_START_HOOK > 0 */
 
 
+
+/****************************************************************************************
+*   M O D B U S   R T U   D R I V E R   H O O K   F U N C T I O N S
+****************************************************************************************/
+
+#if (BOOT_COM_MBRTU_ENABLE > 0)
+/************************************************************************************//**
+** \brief     Controls the state of the DE/NRE GPIO pin on an RS485 transceiver.
+** \param     enable When enable is BLT_TRUE, the pin should go logic high to enable the
+**            driver output. When enable is BLT_FALSE, the pin should go logic low to
+**            enable the receiver input.
+** \return    none.
+**
+****************************************************************************************/
+void MbRtuDriverOutputControlHook(blt_bool enable)
+{
+
+} /*** end of MbRtuDriverOutputControlHook ***/
+#endif /* BOOT_COM_MBRTU_ENABLE > 0 */
+
+
 /****************************************************************************************
 *   W A T C H D O G   D R I V E R   H O O K   F U N C T I O N S
 ****************************************************************************************/
@@ -147,7 +168,7 @@ void CopServiceHook(void)
 #if (BOOT_NVM_HOOKS_ENABLE > 0)
 /************************************************************************************//**
 ** \brief     Callback that gets called at the start of the internal NVM driver
-**            initialization routine. 
+**            initialization routine.
 ** \return    none.
 **
 ****************************************************************************************/
@@ -157,9 +178,9 @@ void NvmInitHook(void)
 
 
 /************************************************************************************//**
-** \brief     Callback that gets called at the start of the NVM driver write 
+** \brief     Callback that gets called at the start of the NVM driver write
 **            routine. It allows additional memory to be operated on. If the address
-**            is not within the range of the additional memory, then 
+**            is not within the range of the additional memory, then
 **            BLT_NVM_NOT_IN_RANGE must be returned to indicate that the data hasn't
 **            been written yet.
 ** \param     addr Start address.
@@ -177,7 +198,7 @@ blt_int8u NvmWriteHook(blt_addr addr, blt_int32u len, blt_int8u *data)
 
 
 /************************************************************************************//**
-** \brief     Callback that gets called at the start of the NVM driver erase 
+** \brief     Callback that gets called at the start of the NVM driver erase
 **            routine. It allows additional memory to be operated on. If the address
 **            is not within the range of the additional memory, then
 **            BLT_NVM_NOT_IN_RANGE must be returned to indicate that the memory
@@ -225,7 +246,7 @@ blt_bool NvmVerifyChecksumHook(void)
 **            performed once the entire user program has been programmed. Through
 **            the checksum, the bootloader can check if a valid user programming is
 **            present and can be started.
-** \return    BLT_TRUE if successful, BLT_FALSE otherwise. 
+** \return    BLT_TRUE if successful, BLT_FALSE otherwise.
 **
 ****************************************************************************************/
 blt_bool NvmWriteChecksumHook(void)
@@ -241,8 +262,8 @@ blt_bool NvmWriteChecksumHook(void)
 
 #if (BOOT_XCP_SEED_KEY_ENABLE > 0)
 /************************************************************************************//**
-** \brief     Provides a seed to the XCP master that will be used for the key 
-**            generation when the master attempts to unlock the specified resource. 
+** \brief     Provides a seed to the XCP master that will be used for the key
+**            generation when the master attempts to unlock the specified resource.
 **            Called by the GET_SEED command.
 ** \param     resource  Resource that the seed if requested for (XCP_RES_XXX).
 ** \param     seed      Pointer to byte buffer wher the seed will be stored.
@@ -263,8 +284,8 @@ blt_int8u XcpGetSeedHook(blt_int8u resource, blt_int8u *seed)
 
 
 /************************************************************************************//**
-** \brief     Called by the UNLOCK command and checks if the key to unlock the 
-**            specified resource was correct. If so, then the resource protection 
+** \brief     Called by the UNLOCK command and checks if the key to unlock the
+**            specified resource was correct. If so, then the resource protection
 **            will be removed.
 ** \param     resource  resource to unlock (XCP_RES_XXX).
 ** \param     key       pointer to the byte buffer holding the key.

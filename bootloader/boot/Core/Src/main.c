@@ -89,13 +89,14 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  BootInit();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    BootTask();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
