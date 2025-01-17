@@ -59,5 +59,7 @@ add_custom_command(TARGET bootloader
 	POST_BUILD
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 	COMMAND ${CMAKE_OBJCOPY} ARGS -O srec -I elf32-littlearm bootloader bootloader.srec
+	COMMAND ${CMAKE_OBJCOPY} ARGS -O ihex -I elf32-littlearm bootloader bootloader.hex
+	COMMAND ${CMAKE_OBJCOPY} ARGS -O binary -I elf32-littlearm bootloader bootloader.bin
 )
 # endregion
