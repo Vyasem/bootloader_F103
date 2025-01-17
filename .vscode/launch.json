@@ -65,12 +65,12 @@
 			"breakAfterReset": true,
 			"serverArgs": ["-gui"],
 			"preLaunchTask": "Build the active target",
-			// "preLaunchCommands": [
-			// 	"load ./../bootloader/bootloader.srec",
-			// 	"load ./${command:cmake.getLaunchTargetFilename}_checksum.srec",
-			// 	"enable breakpoint",
-			// 	"monitor reset"
-			// ]
+			"preLaunchCommands": [
+				"load ./../bootloader/bootloader.srec",
+				"load ./${command:cmake.getLaunchTargetFilename}_checksum.srec",
+				"enable breakpoint",
+				"monitor reset"
+			]
 		}
 	],
 	"version": "2.0.0"
